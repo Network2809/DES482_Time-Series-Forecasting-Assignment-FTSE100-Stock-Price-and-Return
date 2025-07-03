@@ -83,5 +83,23 @@ def plot_efficient_frontier(num_points=100):
     plt.colorbar(label='Sharpe Ratio')
     plt.show()
 
-# Uncomment to plot the efficient frontier
-# plot_efficient_frontier()
+# Automatically plot the efficient frontier
+plot_efficient_frontier()
+
+# Summary
+print(f"We’re working with these stocks: {', '.join(tickers)}")
+
+print("\nLet’s start with the Minimum Risk Portfolio:")
+for ticker, weight in zip(tickers, min_risk_weights):
+    print(f"- {ticker}: {weight:.2%} of the portfolio")
+print(f"Expected Annual Return: {port_return(min_risk_weights):.2%}")
+print(f"Portfolio Risk (Std Dev): {port_risk(min_risk_weights):.2%}")
+print(f"Sharpe Ratio: {-sharpe_ratio(min_risk_weights):.2f}")
+
+print("\nNow, check out the Maximum Sharpe Ratio Portfolio:")
+for ticker, weight in zip(tickers, max_sharpe_weights):
+    print(f"- {ticker}: {weight:.2%} of the portfolio")
+print(f"Expected Annual Return: {port_return(max_sharpe_weights):.2%}")
+print(f"Portfolio Risk (Std Dev): {port_risk(max_sharpe_weights):.2%}")
+print(f"Sharpe Ratio: {-sharpe_ratio(max_sharpe_weights):.2f}")
+
