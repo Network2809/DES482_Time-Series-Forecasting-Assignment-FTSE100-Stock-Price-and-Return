@@ -65,7 +65,7 @@ print("Portfolio Risk:", port_risk(max_sharpe_weights))
 print("Sharpe Ratio:", -sharpe_ratio(max_sharpe_weights))
 
 # Plot Efficient Frontier
-def plot_efficient_frontier(num_points=100):
+def plot_efficient_frontier(num_points=5000):
     results = np.zeros((3, num_points))
     for i in range(num_points):
         weights = np.random.dirichlet(np.ones(num_assets), size=1)[0]
@@ -81,6 +81,12 @@ def plot_efficient_frontier(num_points=100):
     plt.ylabel('Portfolio Return')
     plt.title('Efficient Frontier')
     plt.colorbar(label='Sharpe Ratio')
+
+    # Plot the Optimal Portfolio (Maximum Sharpe Ratio Point)
+    opt_risk = port_risk(max_sharpe_weights)
+    opt_return = port_return(max_sharpe_weights)
+    plt.scatter(opt_risk, opt_return, color='red', marker='*', s=200, label='Optimal Portfolio')
+    plt.legend()
     plt.show()
 
 # Automatically plot the efficient frontier
@@ -102,4 +108,3 @@ for ticker, weight in zip(tickers, max_sharpe_weights):
 print(f"Expected Annual Return: {port_return(max_sharpe_weights):.2%}")
 print(f"Portfolio Risk (Std Dev): {port_risk(max_sharpe_weights):.2%}")
 print(f"Sharpe Ratio: {-sharpe_ratio(max_sharpe_weights):.2f}")
-
