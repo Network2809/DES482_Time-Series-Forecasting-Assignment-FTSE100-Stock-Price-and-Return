@@ -7,28 +7,26 @@ from scipy.optimize import minimize
 
 # Step 2: Data Collection
 tickers = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META']  # Select at least 5 S&P 500 stocks
-data = yf.download(tickers, start='2020-01-01', end='2023-01-01', auto_adjust=True)
+data = yf.download(tickers, start='2020-01-01', end='2023-01-01')['Close']
 
 # Step 3: Data Preparation
-returns = data['Adj Close'].pct_change().dropna()
+returns = data.pct_change().dropna()
 mean_returns = returns.mean() * 252
 cov_matrix = returns.cov() * 252
 num_assets = len(tickers)
 
 # Plot historical prices
 plt.figure(figsize=(12, 6))
-for ticker in tickers:
-    plt.plot(data['Adj Close'][ticker], label=ticker)
+plt.plot(data)
 plt.title('Historical Adjusted Closing Prices')
-plt.legend()
+plt.legend(tickers)
 plt.show()
 
 # Plot daily returns
 plt.figure(figsize=(12, 6))
-for ticker in tickers:
-    plt.plot(returns[ticker], label=ticker)
+plt.plot(returns)
 plt.title('Daily Returns')
-plt.legend()
+plt.legend(tickers)
 plt.show()
 
 # Step 4: Define Functions
